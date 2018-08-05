@@ -1,0 +1,65 @@
+<app-navbar></app-navbar>
+<section class="section">
+    <div class="container">
+        <h1 class="title"> News Posts</h1>
+        <h2 class="subtitle">
+            A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading
+        </h2>
+        <app-news-cards></app-news-cards>
+    </div>
+
+</section>
+<button (click)="openDialog()" class="mdc-fab app-fab--absolute mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" style="background-color: #FFC107;">
+    <i class="material-icons">add</i>
+</button>
+
+    <form (ngSubmit)="onSubmitAdd()" novalidate>
+        <div class="modal" [ngClass]="{'is-active': isDialogOpen}">
+            <div class="modal-background" (click)="closeDialog()">
+            </div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                <p class="modal-card-title">Add a news post</p>
+                <button (click)="closeDialog()" class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                   <div class="field">
+                    <label class="label">Title</label>
+                    <div class="control">
+                        <!-- <textarea class="textarea" placeholder="e.g. Hello world"></textarea> -->
+                        <input 
+                        [(ngModel)]="newsObj.title" name="title" 
+                        type="text" placeholder="Title" class="input" required>
+                    </div>
+                    <p class="help">What is it about?</p>
+                    </div>
+                    <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control">
+                        <!-- <textarea class="textarea" placeholder="e.g. Hello world"></textarea> -->
+                        <input
+                        [(ngModel)]="newsObj.description" name="description" 
+                        type="text" placeholder="details" class="input" required>
+                    </div>
+                    <p class="help">details</p>
+                    </div>
+                    <div class="field">
+                    <label class="label">URL</label>
+                    <div class="control">
+                        <input 
+                        [(ngModel)]="newsObj.photo_URL" name="photo_URL" 
+                        type="text" placeholder="Link of photo here" class="input" required>
+                    </div>
+                    <p class="help">Paste link</p>
+                    </div>
+
+                </section>
+                <footer class="modal-card-foot">
+                <button class="button is-success" type="submit">Save changes</button>
+                <button class="button" (click)="closeDialog()">Cancel</button>
+                </footer>
+            </div>
+        </div>
+    </form>
+
+ 

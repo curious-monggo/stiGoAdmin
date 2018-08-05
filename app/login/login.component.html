@@ -1,0 +1,10 @@
+<section class="hero is-secondary is-fullheight is-loading">
+  <div class="hero-body">
+    <div class="container ">
+      <h1 class="title is-1 has-text-weight-bold">Good Morning.</h1>
+      <h2 class="subtitle">Login with your Google account</h2>
+      <a (click)="facebookLogin()"
+      class="button is-outlined is-rounded is-info" [ngClass]="{'is-loading': isLoadingAuthLogin}" >Login</a>
+    </div> 
+  </div>
+</section>
