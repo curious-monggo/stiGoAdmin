@@ -1,0 +1,2 @@
+# stiGoAdmin
+An angular app
