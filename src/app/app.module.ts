@@ -1,72 +1,112 @@
 
+import { AngularFireDatabase } from 'angularfire2/database';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
+
+
+//components
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { NewsCardComponent } from './components/news-card/news-card.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { NewsPageComponent } from './pages/news-page/news-page.component';
+import { ProgramsPageComponent } from './pages/programs-page/programs-page.component';
+import { ProgramsCardComponent } from './components/programs-card/programs-card.component';
 
-import { RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { NavbarComponent } from './navbar/navbar.component';
+//Routes
+import { RouterModule, Routes} from '@angular/router';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
-import { NewsComponent } from './news/news.component';
-import { DashboardCardsComponent } from './dashboard-cards/dashboard-cards.component';
-import { NewsCardsComponent } from './news-cards/news-cards.component';
-
+//angularFire
+import { environment } from './../environments/environment';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
-import { NewsService } from './news-service/news.service';
+
+//services
+import { AuthService } from './services/auth-service/auth.service';
 
 
-const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'news', component: NewsComponent },
-  { path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
-  },
-  { path: '**',
-    component: PageNotFoundComponent,
-    pathMatch: 'full'
-  }
-];
+//Form
+import { FormsModule } from '@angular/forms';
+import { UserPageComponent } from './pages/user-page/user-page.component';
+import { UsersPageComponent } from './pages/users-page/users-page.component';
+import { UsersItemComponent } from './components/users-item/users-item.component';
+import { EventsPageComponent } from './pages/events-page/events-page.component';
 
-export const firebaseConfig = {
-  apiKey: "AIzaSyD6Rg5ux3fQi3OrwrWCHAEipaxrk3hB7EY",
-  authDomain: "stigo-6d063.firebaseapp.com",
-  databaseURL: "https://stigo-6d063.firebaseio.com",
-  projectId: "stigo-6d063",
-  storageBucket: "stigo-6d063.appspot.com",
-  messagingSenderId: "510666125923"
-};
 
+import { EventCalendarComponent } from './components/event-calendar/event-calendar.component';
+
+import { FullCalendarModule } from 'ng-fullcalendar';
+
+  const appRoutes: Routes = [
+    {
+      path:'',
+      redirectTo: '/login',
+      pathMatch: 'full'
+    },
+    {
+      path: 'login',
+      component: LoginPageComponent
+    },
+    {
+      path: 'news',
+      component: NewsPageComponent
+    },
+    {
+      path: 'events',
+      component: EventsPageComponent
+    },
+    {
+      path: 'programs',
+      component: ProgramsPageComponent
+    },
+    {
+      path: 'users',
+      component: UsersPageComponent
+    },
+    {
+      path: '**',
+      component: PageNotFoundComponent,
+      pathMatch: 'full'
+    }
+  ];
+
+
+  
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    LoginPageComponent,
     PageNotFoundComponent,
-    DashboardComponent,
+    NewsPageComponent,
     NavbarComponent,
-    NewsComponent,
-    DashboardCardsComponent,
-    NewsCardsComponent
+    NewsCardComponent,
+    ProgramsPageComponent,
+    ProgramsCardComponent,
+    UserPageComponent,
+    UsersPageComponent,
+    UsersItemComponent,
+    EventsPageComponent,
+    EventCalendarComponent,
+    
+
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule,
-    FormsModule
+    FormsModule, 
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'stiGoDashboard'),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireStorageModule, // imports firebase/storage only needed for storage features
+    FullCalendarModule
+
   ],
-  providers: [
-    AngularFireDatabase,
-    NewsService
-   ],
+  providers: [AuthService, AngularFireDatabase, NewsCardComponent, ProgramsCardComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
